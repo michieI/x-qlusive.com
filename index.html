@@ -136,13 +136,13 @@
       }
       @media (max-width: 700px) {
         .mark {
-          left: 8vw;
+          left: 50%;
           top: 11svh;
-          width: clamp(140px, 38vw, 210px);
-          transform: none;
+          width: clamp(150px, 42vw, 210px);
+          transform: translateX(-50%);
         }
         .manifesto {
-          left: 8vw;
+          left: 7vw;
           right: 7vw;
           top: 36svh;
           width: auto;
@@ -150,13 +150,10 @@
           font-size: clamp(1.9rem, 8.25vw, 3.4rem);
           line-height: 1.02;
           letter-spacing: -.035em;
+          text-align: center;
         }
         .separator {
-          left: 8vw;
-          top: 28svh;
-          width: 4rem;
-          height: 1px;
-          transform: none;
+          display: none;
         }
         .copyright {
           bottom: calc(.9rem + env(safe-area-inset-bottom));
