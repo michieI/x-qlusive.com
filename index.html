@@ -1,79 +1,165 @@
-<!DOCTYPE html>
-<html lang="es">
+<!doctype html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Creating the Global Platform for Arts, Entertainment and Nightlife.">
     <title>X-QLUSIVE</title>
-
-    <!-- Viewport con zoom desactivado -->
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0,
-                 maximum-scale=1.0, minimum-scale=1.0,
-                 user-scalable=no"
-    />
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="x_favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="x_favicon.png" />
-
+    <link rel="icon" type="image/x-icon" href="x_favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="x_favicon.png">
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        background: #000;
-        min-height: 100vh;
-        overflow: hidden;
-        position: relative;
-        font-family: system-ui, sans-serif;
-        touch-action: none;
-      }
-
-      .watermark-wrapper {
-        position: absolute;
-        right: -12%;
-        top: -8%;
-        width: 85%;
-        pointer-events: none;
-      }
-
-      .logo-watermark {
-        width: 100%;
-        opacity: 0.05;
-        filter: grayscale(1) brightness(1.4);
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-
-      .watermark-tint {
+      :root { color-scheme: dark; background: #000; }
+      * { box-sizing: border-box; }
+      html, body {
         width: 100%;
         height: 100%;
-        background: #8f95a3;
-        opacity: 0.18;
-        mix-blend-mode: multiply;
-        position: absolute;
-        top: 0;
-        left: 0;
+        margin: 0;
+        overflow: hidden;
+        background: #000;
+        touch-action: none;
       }
-
+      main {
+        position: relative;
+        isolation: isolate;
+        width: 100%;
+        height: 100vh;
+        height: 100svh;
+        min-height: 360px;
+        overflow: hidden;
+        background: #000;
+      }
+      .scene {
+        position: absolute;
+        z-index: 0;
+        left: 50%;
+        top: 50%;
+        width: max(100vw, 150svh);
+        aspect-ratio: 3 / 2;
+        transform: translate3d(-50%, -50%, 0);
+      }
+      .scene::before {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        inset: -8%;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 38% 33% at 17% 25%, rgba(175, 182, 195, .055), transparent 78%),
+          radial-gradient(ellipse 44% 38% at 76% 21%, rgba(205, 200, 190, .04), transparent 80%),
+          radial-gradient(ellipse 40% 34% at 31% 82%, rgba(150, 160, 180, .045), transparent 79%),
+          radial-gradient(ellipse 46% 40% at 88% 78%, rgba(205, 210, 220, .035), transparent 82%);
+        filter: blur(42px);
+        mix-blend-mode: screen;
+      }
+      .background {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .mark {
+        position: absolute;
+        z-index: 4;
+        left: 26vw;
+        top: 50%;
+        width: clamp(220px, 25vw, 390px);
+        height: auto;
+        display: block;
+        transform: translate3d(-50%, -50%, 0);
+        filter: drop-shadow(0 0 16px rgba(255, 255, 255, .18));
+        pointer-events: none;
+      }
+      .manifesto {
+        position: absolute;
+        z-index: 4;
+        right: 13.5vw;
+        top: 50%;
+        width: min(36vw, 620px);
+        margin: 0;
+        transform: translateY(-50%);
+        color: #f2f2f2;
+        font: 400 clamp(2rem, 4vw, 4.75rem) / .98 Arial, Helvetica, sans-serif;
+        letter-spacing: -.04em;
+        text-wrap: balance;
+      }
+      .bloom, .grain, .vignette {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .bloom {
+        z-index: 1;
+        opacity: .2;
+        mix-blend-mode: screen;
+        background: radial-gradient(ellipse 62% 48% at 50% 52%, rgba(255, 255, 255, .085), rgba(175, 185, 205, .03) 48%, transparent 82%);
+      }
+      .grain {
+        z-index: 2;
+        opacity: .046;
+        mix-blend-mode: screen;
+        background-image:
+          repeating-radial-gradient(circle at 21% 33%, rgba(255, 255, 255, .68) 0 .4px, transparent .7px 2.2px),
+          repeating-radial-gradient(circle at 69% 73%, rgba(255, 255, 255, .4) 0 .35px, transparent .65px 1.9px);
+        background-size: 7px 7px, 5px 5px;
+      }
+      .vignette {
+        z-index: 3;
+        background: radial-gradient(ellipse at center, transparent 38%, rgba(0, 0, 0, .1) 70%, rgba(0, 0, 0, .48) 110%);
+      }
       @media (max-width: 700px) {
-        .watermark-wrapper {
-          width: 140%;
-          right: -25%;
-          top: -20%;
+        .mark {
+          left: 8vw;
+          top: 10svh;
+          width: clamp(140px, 38vw, 210px);
+          transform: none;
+        }
+        .manifesto {
+          left: 8vw;
+          right: 8vw;
+          top: 44%;
+          width: auto;
+          transform: none;
+          font-size: clamp(2rem, 9vw, 4rem);
+          line-height: 1.01;
+        }
+      }
+      @media (max-aspect-ratio: 3 / 4) {
+        .vignette {
+          background: radial-gradient(ellipse at center, transparent 38%, rgba(0, 0, 0, .16) 72%, rgba(0, 0, 0, .46) 110%);
         }
       }
     </style>
   </head>
-
   <body>
-    <div class="watermark-wrapper">
-      <img src="X.png" class="logo-watermark" alt="Watermark" />
-      <div class="watermark-tint"></div>
-    </div>
+    <main aria-label="X-QLUSIVE">
+      <div class="scene" aria-hidden="true">
+        <img class="background" src="x-qlusive-background.png" alt="">
+      </div>
+      <img class="mark" src="x-mark.png" alt="X">
+      <p class="manifesto">Creating the Global Platform for Arts, Entertainment and Nightlife.</p>
+      <div class="bloom" aria-hidden="true"></div>
+      <div class="grain" aria-hidden="true"></div>
+      <div class="vignette" aria-hidden="true"></div>
+    </main>
+    <script>
+      const stopZoom = (event) => event.preventDefault();
+
+      document.addEventListener('wheel', (event) => {
+        if (event.ctrlKey || event.metaKey) event.preventDefault();
+      }, { passive: false });
+
+      document.addEventListener('keydown', (event) => {
+        if ((event.ctrlKey || event.metaKey) && ['+', '=', '-', '_', '0'].includes(event.key)) {
+          event.preventDefault();
+        }
+      });
+
+      document.addEventListener('gesturestart', stopZoom, { passive: false });
+      document.addEventListener('gesturechange', stopZoom, { passive: false });
+      document.addEventListener('gestureend', stopZoom, { passive: false });
+      document.addEventListener('dblclick', stopZoom, { passive: false });
+    </script>
   </body>
 </html>
