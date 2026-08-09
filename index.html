@@ -62,7 +62,7 @@
       .mark {
         position: absolute;
         z-index: 4;
-        left: 26vw;
+        left: 32vw;
         top: 50%;
         width: clamp(220px, 25vw, 390px);
         height: auto;
@@ -74,7 +74,7 @@
       .manifesto {
         position: absolute;
         z-index: 4;
-        right: 13.5vw;
+        right: 7.5vw;
         top: 50%;
         width: min(36vw, 620px);
         margin: 0;
@@ -83,6 +83,18 @@
         font: 400 clamp(2rem, 4vw, 4.75rem) / .98 Arial, Helvetica, sans-serif;
         letter-spacing: -.04em;
         text-wrap: balance;
+      }
+      .separator {
+        position: absolute;
+        z-index: 4;
+        left: 50%;
+        top: 50%;
+        width: 1px;
+        height: clamp(190px, 18vw, 260px);
+        transform: translate3d(-50%, -50%, 0);
+        background: rgba(242, 242, 242, .62);
+        box-shadow: 0 0 12px rgba(255, 255, 255, .08);
+        pointer-events: none;
       }
       .copyright {
         position: absolute;
@@ -139,6 +151,13 @@
           line-height: 1.02;
           letter-spacing: -.035em;
         }
+        .separator {
+          left: 8vw;
+          top: 28svh;
+          width: 4rem;
+          height: 1px;
+          transform: none;
+        }
         .copyright {
           bottom: calc(.9rem + env(safe-area-inset-bottom));
           padding: 0 1rem;
@@ -158,8 +177,9 @@
         <img class="background" src="x-qlusive-background.png" alt="">
       </div>
       <img class="mark" src="x-mark.png" alt="X">
+      <div class="separator" aria-hidden="true"></div>
       <p class="manifesto">Creating the Global Platform for Arts, Entertainment and Nightlife.</p>
-      <p class="copyright">©2026 X-QLUSIVE. All Rights Reserved.</p>
+      <p class="copyright">©2026 X-QLUSIVE GROUP. All Rights Reserved.</p>
       <div class="bloom" aria-hidden="true"></div>
       <div class="grain" aria-hidden="true"></div>
       <div class="vignette" aria-hidden="true"></div>
