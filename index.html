@@ -57,6 +57,10 @@
         display: block;
         object-fit: cover;
         object-position: center;
+        pointer-events: none;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-user-drag: none;
         opacity: 1;
         filter: none;
         transform: none;
@@ -155,7 +159,7 @@
       <div class="scene" aria-hidden="true">
         <img class="background" src="background-1920.webp"
           srcset="background-960.webp 960w, background-1920.webp 1920w"
-          sizes="100vw" alt="" fetchpriority="high" decoding="async">
+          sizes="100vw" alt="" fetchpriority="high" decoding="async" draggable="false">
       </div>
       <div class="mark-shell" aria-label="X">
         <img class="mark-fallback" src="x-mark.png" alt="" fetchpriority="high" decoding="async">
@@ -183,6 +187,10 @@
 
     Promise.all(imageReady).then(() => requestAnimationFrame(revealPage));
     setTimeout(revealPage, 2500);
+
+    document.addEventListener('contextmenu', (event) => {
+      if (event.target.classList?.contains('background')) event.preventDefault();
+    });
 
     const stopZoom = (event) => event.preventDefault();
 
