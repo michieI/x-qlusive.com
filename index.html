@@ -8,6 +8,11 @@
     <title>X-QLUSIVE</title>
     <link rel="icon" type="image/x-icon" href="x_favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="x_favicon.png">
+    <link rel="preload" as="image" href="x-mark.png" fetchpriority="high">
+    <link rel="preload" as="image" href="background-1920.webp"
+      imagesrcset="background-960.webp 960w, background-1920.webp 1920w"
+      imagesizes="100vw" fetchpriority="high">
+    <script>document.documentElement.classList.add('is-loading');</script>
     <style>
       :root { color-scheme: dark; background: #000; }
       * { box-sizing: border-box; }
@@ -28,6 +33,13 @@
         min-height: 360px;
         overflow: hidden;
         background: #000;
+        opacity: 1;
+        transition: opacity 180ms ease-out;
+      }
+      .is-loading main { opacity: 0; }
+      .is-ready main { opacity: 1; }
+      @media (prefers-reduced-motion: reduce) {
+        main { transition: none; }
       }
       .scene {
         position: absolute;
@@ -45,18 +57,27 @@
         display: block;
         object-fit: cover;
         object-position: center;
+        opacity: 1;
+        filter: none;
+        transform: none;
       }
-      .mark {
+      .mark-shell {
         position: absolute;
         z-index: 4;
         left: 32vw;
         top: 50%;
         width: clamp(220px, 25vw, 390px);
-        height: auto;
-        display: block;
+        aspect-ratio: 585 / 414;
         transform: translate3d(-50%, -50%, 0);
-        filter: drop-shadow(0 0 16px rgba(255, 255, 255, .18));
         pointer-events: none;
+      }
+      .mark-fallback {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        filter: drop-shadow(0 0 16px rgba(255, 255, 255, .18));
       }
       .manifesto {
         position: absolute;
@@ -98,14 +119,14 @@
         white-space: nowrap;
       }
       @media (max-width: 700px) {
-        .mark {
-          left: 50%;
+        .mark-shell {
+          left: 8vw;
           top: 11svh;
-          width: clamp(150px, 42vw, 210px);
-          transform: translateX(-50%);
+          width: clamp(140px, 38vw, 210px);
+          transform: none;
         }
         .manifesto {
-          left: 7vw;
+          left: 8vw;
           right: 7vw;
           top: 36svh;
           width: auto;
@@ -113,10 +134,13 @@
           font-size: clamp(1.9rem, 8.25vw, 3.4rem);
           line-height: 1.02;
           letter-spacing: -.035em;
-          text-align: center;
         }
         .separator {
-          display: none;
+          left: 8vw;
+          top: 28svh;
+          width: 4rem;
+          height: 1px;
+          transform: none;
         }
         .copyright {
           bottom: calc(.9rem + env(safe-area-inset-bottom));
@@ -129,15 +153,38 @@
   <body>
     <main aria-label="X-QLUSIVE">
       <div class="scene" aria-hidden="true">
-        <img class="background" src="adobestock-background.jpeg" alt="">
+        <img class="background" src="background-1920.webp"
+          srcset="background-960.webp 960w, background-1920.webp 1920w"
+          sizes="100vw" alt="" fetchpriority="high" decoding="async">
       </div>
-      <img class="mark" src="x-mark.png" alt="X">
+      <div class="mark-shell" aria-label="X">
+        <img class="mark-fallback" src="x-mark.png" alt="" fetchpriority="high" decoding="async">
+      </div>
       <div class="separator" aria-hidden="true"></div>
       <p class="manifesto">Creating the Global Platform for Arts, Entertainment and Nightlife.</p>
       <p class="copyright">©2026 X-QLUSIVE GROUP. All Rights Reserved.</p>
     </main>
-    <script>
-      const stopZoom = (event) => event.preventDefault();
+  <script>
+    const revealPage = () => {
+      document.documentElement.classList.remove('is-loading');
+      document.documentElement.classList.add('is-ready');
+    };
+
+    const criticalImages = [...document.querySelectorAll('.background, .mark-fallback')];
+    const imageReady = criticalImages.map((image) => {
+      if (image.complete && image.naturalWidth) {
+        return image.decode ? image.decode().catch(() => {}) : Promise.resolve();
+      }
+      return new Promise((resolve) => {
+        image.addEventListener('load', resolve, { once: true });
+        image.addEventListener('error', resolve, { once: true });
+      });
+    });
+
+    Promise.all(imageReady).then(() => requestAnimationFrame(revealPage));
+    setTimeout(revealPage, 2500);
+
+    const stopZoom = (event) => event.preventDefault();
 
       document.addEventListener('wheel', (event) => {
         if (event.ctrlKey || event.metaKey) event.preventDefault();
