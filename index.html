@@ -40,6 +40,7 @@
       .is-ready main { opacity: 1; }
       @media (prefers-reduced-motion: reduce) {
         main { transition: none; }
+        .mark-echo { animation: none; opacity: 0; }
       }
       .scene {
         position: absolute;
@@ -82,6 +83,39 @@
         height: 100%;
         display: block;
         filter: drop-shadow(0 0 16px rgba(255, 255, 255, .18));
+      }
+
+      .mark-echo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        opacity: 0;
+        filter: brightness(1.08);
+        animation: fragmented-echo 6.8s steps(1, end) infinite;
+        pointer-events: none;
+        -webkit-user-drag: none;
+      }
+      .mark-echo--top {
+        clip-path: polygon(0 0, 100% 0, 100% 29%, 0 36%);
+      }
+      .mark-echo--middle {
+        clip-path: polygon(0 31%, 100% 25%, 100% 67%, 0 72%);
+        animation-delay: 55ms;
+      }
+      .mark-echo--bottom {
+        clip-path: polygon(0 69%, 100% 63%, 100% 100%, 0 100%);
+        animation-delay: 110ms;
+      }
+      @keyframes fragmented-echo {
+        0%, 10%, 19%, 31%, 41%, 100% { opacity: 0; transform: translate3d(0, 0, 0) scale(1); }
+        11% { opacity: .7; transform: translate3d(-5.5%, .5%, 0) scale(1.01); }
+        12% { opacity: .3; transform: translate3d(4%, -.5%, 0) scale(.995); }
+        13% { opacity: 0; }
+        32% { opacity: .55; transform: translate3d(4.5%, 0, 0) scale(1.008); }
+        33% { opacity: .2; transform: translate3d(-3%, .3%, 0) scale(1); }
+        34% { opacity: 0; }
       }
       .manifesto {
         position: absolute;
@@ -163,6 +197,9 @@
       </div>
       <div class="mark-shell" aria-label="X">
         <img class="mark-fallback" src="x-mark.png" alt="" fetchpriority="high" decoding="async">
+        <img class="mark-echo mark-echo--top" src="x-mark.png" alt="" aria-hidden="true" decoding="async">
+        <img class="mark-echo mark-echo--middle" src="x-mark.png" alt="" aria-hidden="true" decoding="async">
+        <img class="mark-echo mark-echo--bottom" src="x-mark.png" alt="" aria-hidden="true" decoding="async">
       </div>
       <div class="separator" aria-hidden="true"></div>
       <p class="manifesto">Creating the Global Platform for Arts, Entertainment and Nightlife.</p>
