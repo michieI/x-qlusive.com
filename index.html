@@ -5,18 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="X-QLUSIVE — Official site." />
-    <title>X-QLUSIVE</title>\n    <link rel="icon" type="image/x-icon" href="x_favicon.ico" />\n    <link rel="icon" type="image/png" sizes="32x32" href="x_favicon.png" />
+    <title>X-QLUSIVE</title>
+    <link rel="preload" as="image" href="X.png" fetchpriority="high" />
+    <link rel="icon" type="image/x-icon" href="x_favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="x_favicon.png" />
     <style>
       * { box-sizing: border-box; }
       html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; overscroll-behavior: none; touch-action: none; background: #000; color: #fff; }
       main { position: fixed; inset: 0; isolation: isolate; background: #000; }
-      canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+      canvas { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; }
+      .identity { position: absolute; z-index: 1; inset: 0; display: flex; align-items: center; justify-content: center; gap: clamp(28px, 4.5vw, 72px); width: min(88vw, 1280px); margin: auto; padding: 48px 0 82px; pointer-events: none; }
+      .mark { width: clamp(220px, 27vw, 390px); height: auto; flex: 0 0 auto; display: block; mix-blend-mode: screen; user-select: none; }
+      .separator { width: 1px; height: clamp(190px, 20vw, 270px); flex: 0 0 1px; background: rgba(255, 255, 255, .72); box-shadow: 0 0 10px rgba(255, 255, 255, .1); }
+      .manifesto { width: min(39vw, 570px); margin: 0; color: #fff; font: 400 clamp(2rem, 3.8vw, 4.4rem)/1 Arial, Helvetica, sans-serif; letter-spacing: -.04em; text-wrap: balance; }
+      @media (max-width: 700px) {
+        .identity { gap: 18px; width: 90vw; padding-bottom: 64px; }
+        .mark { width: 34vw; }
+        .separator { height: 30vw; }
+        .manifesto { width: 48vw; font-size: clamp(1.15rem, 5.6vw, 2.1rem); line-height: 1.02; }
+      }
       footer { position: absolute; z-index: 2; bottom: max(24px, env(safe-area-inset-bottom)); left: 50%; width: 100%; transform: translateX(-50%); padding: 0 20px; color: #fff; font: 500 10px/1.5 Arial, Helvetica, sans-serif; letter-spacing: .18em; text-align: center; user-select: none; }
     </style>
   </head>
   <body>
     <main>
       <canvas id="visual" aria-hidden="true"></canvas>
+      <section class="identity" aria-label="X-QLUSIVE">
+        <img class="mark" src="X.png" alt="X-QLUSIVE" width="1024" height="1024" decoding="async" fetchpriority="high" />
+        <span class="separator" aria-hidden="true"></span>
+        <p class="manifesto">Creating the Global Platform for Arts, Entertainment and Nightlife.</p>
+      </section>
       <footer>©2026 X-QLUSIVE GROUP. All Rights Reserved.</footer>
     </main>
     <script>
